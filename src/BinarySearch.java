@@ -10,6 +10,8 @@ public class BinarySearch
     // but we also want to repeat until there are no more values to check (i.e. target not found);
     // this happens when the left index "crosses over" the right index,
     // which occurs when we check the final remaining element and it's not the target
+
+
     while (left <= right)
     {
        // set index to check to the middle index; note that if there is an even
