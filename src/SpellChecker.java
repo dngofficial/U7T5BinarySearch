@@ -52,9 +52,52 @@ public class SpellChecker
   */
   public boolean binarySpellCheck(String word)
   {
-    /* IMPLEMENT ME! */
 
-    return false; // STUB
+    {
+      // start "left" boundary at first index and "right" boundary at last index
+      int loops = 0;
+      int left = 0;
+      int right = dictionary.size() - 1;
+
+      // this is the trickiest part to set up: we want to return as soon as we locate target,
+      // but we also want to repeat until there are no more values to check (i.e. target not found);
+      // this happens when the left index "crosses over" the right index,
+      // which occurs when we check the final remaining element and it's not the target
+
+
+      while (left <= right)
+      {
+        loops++;
+        // set index to check to the middle index; note that if there is an even
+        // number of elements (and two middle elements), this integer math truncates,
+        // resulting in the "left middle" value chosen as middle
+        int middle = (left + right) / 2;
+
+        // if target is less than value at current index,
+        // "eliminate" right half by setting the "right" boundary index
+        // to the "middle" index - 1
+        if (word.compareTo(dictionary.get(middle)) < 0)
+        {
+          right = middle - 1;
+        }
+        // else, if target is greater than value at current index,
+        // "eliminate" left half by setting the "left" boundary index
+        // to the "middle" index + 1
+        else if (word.compareTo(dictionary.get(middle)) > 0)
+        {
+          left = middle + 1;
+        }
+        // else, we found the value!
+        else
+        {
+          System.out.println("-- BINARY SEARCH: Number of words checked (loops/runtime): " + loops);
+          return true;
+        }
+      }
+
+      System.out.println("-- BINARY SEARCH: Number of words checked (loops/runtime): " + loops);
+      return false;
+    }
   }
 
   // private helper method, called in the constructor, which loads the words
@@ -64,7 +107,7 @@ public class SpellChecker
     String[] tmp = null;
     try
     {
-      FileReader fileReader = new FileReader("src\\dictionary.txt");
+      FileReader fileReader = new FileReader("src\\devandictionary.txt");
       BufferedReader bufferedReader = new BufferedReader(fileReader);
       ArrayList<String> lines = new ArrayList<String>();
       String line = null;
